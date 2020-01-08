@@ -6,12 +6,14 @@ import { routing, appRoutingProviders } from './app.routing';
 import { AppComponent } from './app.component';
 import { CalculateIndexComponent } from './calculate-index/calculate-index.component';
 import { HomeComponent } from './home/home.component';
+import { Page404Component } from './page404/page404.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CalculateIndexComponent,
-    HomeComponent
+    HomeComponent,
+    Page404Component
   ],
   imports: [
     BrowserModule,

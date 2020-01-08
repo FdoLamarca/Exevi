@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./calculate-index.component.css']
 })
 export class CalculateIndexComponent implements OnInit {
-
+  title = 'Cálculo índice equilibrio';
   constructor() { }
 
   ngOnInit() {
