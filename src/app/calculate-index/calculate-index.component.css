@@ -17,9 +17,12 @@
   }
 
   p {
-    margin: 0;
+    /* margin: 0; */
   }
 
+  table {
+    min-width: 90%;
+  }
   .btn {
     background: #1976d2;
     color: #ffffff;

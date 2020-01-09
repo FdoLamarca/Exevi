@@ -13,18 +13,37 @@
     <br /><br />
     <div class="card-container">
         <div class="left-card">
-            <p>Este es el cajon izquierdo</p>
-            <button mat-raised-button (click)="comprobar(demoArray,results)">Calcular con Array Ejemplo</button>
+            <p>Este es un buen Array para probar:<br/>
+                [-7, 1, 5, 2, -4, 3, 0]</p>
+            <button mat-raised-button (click)="checkArray(demoArray,isDemo)">Calcular con Array Ejemplo</button>
         </div>
       
         <div class="left-card">
-            <p>Este es el cajon derecho</p>
+            <p>Me gustaría introducir un Array para calcular</p>
+            <button mat-raised-button (click)="showForm = true">Introducir Array</button>
         </div>    
-        <div class="central-card">
-            <p>Este va en el medio</p>
+        <div *ngIf="showForm" class="central-card">
+            <!-- <span>Se muestra el formulario</span> -->
+            <form [formGroup]="MyForm" (ngSubmit)="miSubmit()">
+                 <input class="form-control" type="text" placeholder="Introduce Array" formControlName="inputArray">
+                 <button type="submit" >Calcular</button>
+            </form>
         </div>
-        <div class="central-card">
-            <p>Este va en el medio</p>
+        <div *ngIf="resultMessage" class="central-card">
+            <span>{{resultMessage}}</span>
+        </div>
+        <div *ngIf="results.length>0" class="central-card">
+            <table>
+                <tr>
+                    <th>Fecha cálculo</th><th>Array</th><th>Indice</th><th>Tiempo</th>
+                </tr>
+                <tr *ngFor="let item of results">
+                    <td>{{item["Hour"]}}</td>
+                    <td>{{item["arrayName"]}}</td>
+                    <td>{{item["indexNumber"]}}</td>
+                    <td>{{item["elapsedTime"]}}</td>
+                </tr>
+            </table>
         </div>
         
     </div>
