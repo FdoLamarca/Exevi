@@ -75,7 +75,11 @@ export class CalculateIndexComponent implements OnInit {
 
   miSubmit() {
     // Convertir el campo texto en un array
-    const introArray = (this.MyForm.value.inputArray).split(',');
+    const stringToArray = (this.MyForm.value.inputArray).split(',');
+    let introArray = new Array(stringToArray.length);
+    for (let x=0; x<stringToArray.length;x++){
+      introArray[x] = parseInt(stringToArray[x]);
+    }
     this.checkArray(introArray,false);
     this.MyForm.reset();
     this.showForm = false;

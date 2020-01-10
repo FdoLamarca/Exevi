@@ -16,10 +16,6 @@
     margin: 8px 0;
   }
 
-  p {
-/*      margin: 0; 
- */  }
-
   form {
     margin: 2em 0;
     clear: both;
@@ -120,8 +116,19 @@
   
 
   table {
-    min-width: 90%;
+    min-width: 100%;
   }
+
+  th {
+    background-color: #fdc696;
+    height: 30px;
+    width: 25%;
+  }
+
+  td {
+    border-bottom: 1px solid;
+  }
+
   .btn {
     background: #1976d2;
     color: #ffffff;
