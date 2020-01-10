@@ -8,14 +8,15 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 })
 export class CalculateIndexComponent implements OnInit {
   title = 'Cálculo índice equilibrio';
-  public demoArray = [-7, 1, 5, 2, -4, 3, 0];
-  public userArray: any[] = [];
-  public results: any[] = [];
-  public isDemo = true;
+  public demoArray : any[];
+  public userArray: any[];
+  public results: any[];
+  public isDemo: boolean;
   public resultMessage: string;
   public showForm = false;
+  public hourIni: number;
+  public hourFin: number;
   MyForm: FormGroup;
-  
 
   CheckBalancePoint(index, currArray, dateIni, hourIni, isDemo) {
     
@@ -32,13 +33,17 @@ export class CalculateIndexComponent implements OnInit {
       // Add data to information array
       // (Calc date, array name, index match, time elapsed)
         const finalCheck = new Date();
-        const hourFin = finalCheck.getMilliseconds();
+        this.hourFin = finalCheck.getMilliseconds();
         if (isDemo) { currArray = 'Array de ejemplo'; }
         
-        this.results.unshift({Hour: dateIni, arrayName: currArray, indexNumber: index, elapsedTime: (hourFin - hourIni) + ' ms'});
+        this.results.unshift({Hour: dateIni, arrayName: currArray, indexNumber: index, elapsedTime: (this.hourFin - hourIni) + ' ms'});
         if (this.results.length>10) {this.results = this.results.slice(0,10);}
-        this.resultMessage = 'El índice de equilibrio del array '+currArray+' es '+index;
+        this.resultMessage = 'El índice de equilibrio del array ['+currArray+'] es '+index;
         return true;
+    }
+    if ( index >= currArray.length-1){
+      const finalCheck = new Date();
+        this.hourFin = finalCheck.getMilliseconds();
     }
     return false;
   }
@@ -47,7 +52,7 @@ export class CalculateIndexComponent implements OnInit {
     /* if ( array.some(this.CheckBalancePoint) ) {
     } */
     const initialCheck = new Date();
-    const hourIni = initialCheck.getMilliseconds();
+    this.hourIni = initialCheck.getMilliseconds();
     const dateIni = initialCheck.toLocaleDateString() + ' ' + initialCheck.toLocaleTimeString();
     let exit = false;
 
@@ -55,36 +60,49 @@ export class CalculateIndexComponent implements OnInit {
     for (const x in array) {
       // tslint:disable-next-line: radix
       (isDemo) ? 
-        exit = this.CheckBalancePoint( parseInt(x), array, dateIni, hourIni, isDemo) : 
-        exit = this.CheckBalancePoint( parseInt(x), array, dateIni, hourIni, false);
+        exit = this.CheckBalancePoint( parseInt(x), array, dateIni, this.hourIni, isDemo) : 
+        exit = this.CheckBalancePoint( parseInt(x), array, dateIni, this.hourIni, false);
       if (exit === true) { 
         break;
-      } else {
-        this.resultMessage = 'No se ha encontrado índice de equilibrio!!';
+      }else{
+        if (parseInt(x) >= array.length-1){
+          this.resultMessage = 'No se ha encontrado índice de equilibrio!!';
+          this.results.unshift({Hour: dateIni, arrayName: array, indexNumber: 'No hay indice', elapsedTime: (this.hourFin - this.hourIni) + ' ms'});
+        }
       }  
-      /* if (!exit) { this.resultMessage = 'No se ha encontrado índice de equilibrio!!'} */
     }
   }
 
+  miSubmit() {
+    // Convertir el campo texto en un array
+    const introArray = (this.MyForm.value.inputArray).split(',');
+    this.checkArray(introArray,false);
+    this.MyForm.reset();
+    this.showForm = false;
+
+  }
+
   constructor() {
+    this.demoArray = [-7, 1, 5, 2, -4, 3, 0];
+    this.userArray = [];
+    this.results = [];
+    this.isDemo = true;
+    this.hourIni = 0;
+    this.hourFin = 0;
+   }
+  
+  ngOnInit() {
+
     this.MyForm = new FormGroup({
-      'inputArray': new FormControl('',[
+      inputArray: new FormControl('',[
         Validators.required,
         Validators.pattern('^-?[\d]+(,-?[\d]+)*$')
       ])
     });
-   }
-  miSubmit() {
     
-    this.showForm = false;
-    // Convertir el campo texto en un array
-    const introArray = (this.MyForm.value.inputArray).split(',');
-    this.checkArray(introArray,false);
-
-  }
-  ngOnInit() {
   }
 }
+
 
 
 

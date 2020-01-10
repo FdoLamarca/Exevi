@@ -1,5 +1,5 @@
 :host {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    font-family: -apple-system, BlinkMacSystemFont, Avenir Next, Avenir, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
     font-size: 16px;
     color: #333;
     box-sizing: border-box;
@@ -17,8 +17,107 @@
   }
 
   p {
-    /* margin: 0; */
+/*      margin: 0; 
+ */  }
+
+  form {
+    margin: 2em 0;
+    clear: both;
   }
+  /**
+  * Make the field a flex-container, reverse the order so label is on top.
+  */
+  .field {
+    clear: both;
+    display: flex;
+    flex-flow: column-reverse;
+    margin-bottom: 1em;
+    margin-top: 15px;
+  }
+  /**
+  * Add a transition to the label and input.
+  * I'm not even sure that touch-action: manipulation works on
+  * inputs, but hey, it's new and cool and could remove the
+  * pesky delay.
+  */
+  label, input {
+    transition: all 0.2s;
+    touch-action: manipulation;
+  }
+  
+  input {
+  
+    font-size: 1.9em;
+    border: 0;
+    border-bottom: 1px solid #ccc;
+    /* border: 1px solid #ccc; */
+    font-family: inherit;
+    -webkit-appearance: none;
+    border-radius: 0;
+    padding: 0px;
+    cursor: text;
+    margin-bottom: 1em;
+   
+  }
+  
+  input:focus {
+    outline: 0;
+    border-bottom: 1px solid #666;
+  }
+  
+  label {
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    padding-left: 4px;
+    font-size: 0.7em;
+   
+  }
+  /**
+  * Translate down and scale the label up to cover the placeholder,
+  * when following an input (with placeholder-shown support).
+  * Also make sure the label is only on one row, at max 2/3rds of the
+  * field—to make sure it scales properly and doesn't wrap.
+  */
+  input:placeholder-shown + label {
+    cursor: text;
+    margin-left: 4px;
+    max-width: 66.66%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transform-origin: left bottom;
+    transform: translate(0, 2.125rem) scale(1.5);
+    font-size: 0.7em;
+  }
+  /**
+  * By default, the placeholder should be transparent. Also, it should
+  * inherit the transition.
+  */
+  ::-webkit-input-placeholder {
+    opacity: 0;
+    transition: inherit;
+    padding-left: 4px;
+    font-size: 0.5em;
+  }
+  /**
+  * Show the placeholder when the input is focused.
+  */
+  input:focus::-webkit-input-placeholder {
+    opacity: 1;
+   
+  }
+  /**
+  * When the element is focused, remove the label transform.
+  * Also, do this when the placeholder is _not_ shown, i.e. when
+  * there's something in the input at all.
+  */
+  input:not(:placeholder-shown) + label,
+  input:focus + label {
+    transform: translate(0, 0) scale(1);
+    cursor: pointer;
+    margin-left: 4px;
+  }
+  
 
   table {
     min-width: 90%;
@@ -90,6 +189,15 @@
   }
 
   .card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 16px;
+    margin-bottom: 25px;
+    min-width: 80%;
+  }
+
+  .main-container {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -285,6 +393,9 @@
     left: -230px;
     z-index: -10;
     width: 1920px;
+  }
+  .message-result {
+    margin-top: 40px;;
   }
 
 

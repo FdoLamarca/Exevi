@@ -11,7 +11,7 @@
     <!-- Resources -->
     <h2>Calcular índice de equilibrio</h2>
     <br /><br />
-    <div class="card-container">
+    <div class="main-container">
         <div class="left-card">
             <p>Este es un buen Array para probar:<br/>
                 [-7, 1, 5, 2, -4, 3, 0]</p>
@@ -21,17 +21,19 @@
         <div class="left-card">
             <p>Me gustaría introducir un Array para calcular</p>
             <button mat-raised-button (click)="showForm = true">Introducir Array</button>
-        </div>    
-        <div *ngIf="showForm" class="central-card">
+        </div>   
+        
+        <div *ngIf="showForm">
             <!-- <span>Se muestra el formulario</span> -->
-            <form [formGroup]="MyForm" (ngSubmit)="miSubmit()">
-                 <input class="form-control" type="text" placeholder="Introduce Array" formControlName="inputArray">
-                 <button type="submit" >Calcular</button>
+            
+            <form class="field" novalidate (ngSubmit)="miSubmit()" [formGroup]="MyForm">
+                <button type="submit">Calcular</button>
+                <input type="text" id="getarray" name="getarray" placeholder="Numeros enteros separados por comas (,)" formControlName="inputArray">
+                <label for="getarray">Introduzca el Array</label>
             </form>
+        
         </div>
-        <div *ngIf="resultMessage" class="central-card">
-            <span>{{resultMessage}}</span>
-        </div>
+        
         <div *ngIf="results.length>0" class="central-card">
             <table>
                 <tr>
@@ -44,6 +46,9 @@
                     <td>{{item["elapsedTime"]}}</td>
                 </tr>
             </table>
+        </div>
+        <div *ngIf="resultMessage" class="central-card message-result">
+            <span>{{resultMessage}}</span>
         </div>
         
     </div>
